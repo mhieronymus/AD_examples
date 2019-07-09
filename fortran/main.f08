@@ -2,8 +2,6 @@ program main
     use tests
     implicit none
 
-
-    call test1
-    call test3
+    call test4
 
 end program main 

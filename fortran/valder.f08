@@ -48,6 +48,10 @@ implicit none
         procedure cos_valder
     end interface cos
 
+    interface tan 
+        procedure tan_valder 
+    end interface tan
+
     interface log 
         procedure log_valder
     end interface log
@@ -428,7 +432,7 @@ implicit none
     
         type(valder_t), INTENT(IN)      :: op1 
         type(valder_t)                  :: op2 
-        op2 = valder_t(sin(op1%val), [cos(op1%val)*op1%der])
+        op2 = valder_t(sin(op1%val), cos(op1%val)*op1%der)
 
     end function sin_valder
 
@@ -436,9 +440,17 @@ implicit none
     
         type(valder_t), INTENT(IN)      :: op1 
         type(valder_t)                  :: op2 
-        op2 = valder_t(cos(op1%val), [-sin(op1%val)*op1%der])
+        op2 = valder_t(cos(op1%val), -sin(op1%val)*op1%der)
 
     end function cos_valder
+
+    pure function tan_valder(op1) result(op2)
+    
+        type(valder_t), INTENT(IN)      :: op1 
+        type(valder_t)                  :: op2 
+        op2 = valder_t(tan(op1%val), op1%der/(cos(op1%val))**2)
+
+    end function tan_valder
 
     pure function sqrt_valder(op1) result(op2)
     
